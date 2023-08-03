@@ -2,9 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 
-
-const playerRoutes = require('./routes/player');
+const promotionRoutes = require('./routes/promotion');
+const recruitmentRoutes = require('./routes/recruitment');
 
 const app = express();
 
@@ -18,19 +19,23 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/api/v1/', playerRoutes);
+app.use('/api/', promotionRoutes);
+app.use('/api/', recruitmentRoutes);
 
-
-mongoose.connect('mongodb://localhost:27017/player-db',
+const PORT = process.env.PORT || 5000
+const MONGODB_URL = process.env.MONGODB_URL
+mongoose.connect(MONGODB_URL,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
     .then(() => {
-        console.log('You are connected to player-db!')
-        app.listen(3000);
+        console.log('You are connected to diligenze_db!')
+        app.listen(PORT, () => {
+            console.log(`Server is running at ${process.env.SERVER_HOST}:${PORT}`)
+        });
     })
     .catch((error) => {
-        console.log('Connection to player-db failed', error)
+        console.log('Connection to diligenze_db failed', error)
     });
 

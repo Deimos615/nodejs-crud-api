@@ -16,13 +16,14 @@ const storage = multer.diskStorage({
     cb(error, "images");
   },
   filename: (req, file, cb) => {
-    const name = file.originalname
+    const fileName = file.originalname.substring(0, file.originalname.lastIndexOf('.'));
+    const name = fileName
       .toLowerCase()
       .split(" ")
-      .join("-");
+      .join("_");
     const ext = MIME_TYPE_MAP[file.mimetype];
-    cb(null, name + "-" + Date.now() + "." + ext);
+    cb(null, name + "_" + Date.now() + "." + ext);
   }
 });
 
-module.exports = multer({ storage: storage }).single("image");
+module.exports = multer({ storage: storage }).single("file");

@@ -4,6 +4,7 @@
   "description": "Node.js, Express and MongodB: Create a Restfull API with images upload",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
